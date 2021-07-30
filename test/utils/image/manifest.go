@@ -236,12 +236,12 @@ func initImageConfigs(list RegistryList) (map[int]Config, map[int]Config) {
 	// Pause - when these values are updated, also update cmd/kubelet/app/options/container_runtime.go
 	configs[Pause] = Config{list.GcRegistry, "pause", "3.5"}
 	configs[Perl] = Config{list.PromoterE2eRegistry, "perl", "5.26"}
-	configs[PrometheusDummyExporter] = Config{list.GcRegistry, "prometheus-dummy-exporter", "v0.1.0"}
+	configs[PrometheusDummyExporter] = Config{list.SampleRegistry, "prometheus-dummy-exporter", "v0.2.0"}
 	configs[PrometheusToSd] = Config{list.GcRegistry, "prometheus-to-sd", "v0.5.0"}
 	configs[Redis] = Config{list.PromoterE2eRegistry, "redis", "5.0.5-alpine"}
 	configs[RegressionIssue74839] = Config{list.PromoterE2eRegistry, "regression-issue-74839", "1.2"}
 	configs[ResourceConsumer] = Config{list.PromoterE2eRegistry, "resource-consumer", "1.9"}
-	configs[SdDummyExporter] = Config{list.GcRegistry, "sd-dummy-exporter", "v0.2.0"}
+	configs[SdDummyExporter] = Config{list.SampleRegistry, "sd-dummy-exporter", "v0.3.0"}
 	configs[VolumeNFSServer] = Config{list.PromoterE2eRegistry, "volume/nfs", "1.2"}
 	configs[VolumeISCSIServer] = Config{list.PromoterE2eRegistry, "volume/iscsi", "2.2"}
 	configs[VolumeGlusterServer] = Config{list.PromoterE2eRegistry, "volume/gluster", "1.2"}

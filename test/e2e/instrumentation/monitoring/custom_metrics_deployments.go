@@ -148,19 +148,15 @@ func stackdriverExporterContainerSpec(name string, namespace string, metricName 
 		Name:            name,
 		Image:           imageutils.GetE2EImage(imageutils.SdDummyExporter),
 		ImagePullPolicy: v1.PullPolicy("Always"),
-		Command: []string{
-			"/bin/sh",
-			"-c",
-			strings.Join([]string{
-				"./sd_dummy_exporter",
-				"--pod-id=$(POD_ID)",
-				"--pod-name=$(POD_NAME)",
-				"--namespace=" + namespace,
-				"--metric-name=" + metricName,
-				fmt.Sprintf("--metric-value=%v", metricValue),
-				"--use-old-resource-model",
-				"--use-new-resource-model",
-			}, " "),
+		Command:         []string{"./sd-dummy-exporter"},
+		Args: []string{
+			"--pod-id=$(POD_ID)",
+			"--pod-name=$(POD_NAME)",
+			"--namespace=" + namespace,
+			"--metric-name=" + metricName,
+			fmt.Sprintf("--metric-value=%v", metricValue),
+			"--use-old-resource-model",
+			"--use-new-resource-model",
 		},
 		Env: []v1.EnvVar{
 			{
@@ -217,8 +213,12 @@ func prometheusExporterPodSpec(metricName string, metricValue int64, port int32)
 				Name:            "prometheus-exporter",
 				Image:           imageutils.GetE2EImage(imageutils.PrometheusDummyExporter),
 				ImagePullPolicy: v1.PullPolicy("Always"),
-				Command: []string{"/prometheus_dummy_exporter", "--metric-name=" + metricName,
-					fmt.Sprintf("--metric-value=%v", metricValue), fmt.Sprintf("=--port=%d", port)},
+				Command:         []string{"./prometheus-dummy-exporter"},
+				Args: []string{
+					"--metric-name=" + metricName,
+					fmt.Sprintf("--metric-value=%v", metricValue),
+					fmt.Sprintf("--port=%d", port),
+				},
 				Ports: []v1.ContainerPort{{ContainerPort: port}},
 			},
 			{
